@@ -2,6 +2,10 @@
 // by Tom Royal 
 // tomroyal.com
 
+var blacklist = [];// global array
+blacklist.push("farage");
+blacklist.push("ukip");
+
 // kitten data!
 var theKittens = {"kitten": [
     {"file": "1.jpg", "Credit": "Crsan", "URL": "http://www.flickr.com/photos/crsan/2571204498/", "type":"0"},
@@ -41,32 +45,29 @@ var theKittens = {"kitten": [
 };
 
 function defarage(theKittens){
+	// console.log('defarage processing blacklist is '+blacklist);
 
 	// called on page load. Searches all img alt text and srcs for the strings in blacklist, replaces with kittens
-	console.log('UKitten is de-Faraging this page, hold tight..');
 	var pagepics=document.getElementsByTagName("img"), i=0, img;	
-	var blacklist = ["farage","ukip"];
 	while (img = pagepics[i++])
 	{	
+		var alttext = String(img.alt).toLowerCase();
+		var imgsrc = String(img.src).toLowerCase();
+		
 		blacklist.forEach(function(blist) {	
-			var alttext = String(img.alt);
-			alttext = alttext.toLowerCase();
-			var imgsrc = String(img.src);
-			imgsrc = imgsrc.toLowerCase();
 			if ((alttext.indexOf(blist) != -1) || (imgsrc.indexOf(blist) != -1)){
 				var randk = Math.floor(Math.random() * 32) + 1
-				img.src = 'http://www.tomroyal.com/teaandkittens/kittenpics/'+theKittens.kitten[randk].file+'';
+				img.src = 'http://s3.amazonaws.com/makapics/'+theKittens.kitten[randk].file+'';
 				if (theKittens.kitten[randk].type == 0){
 					img.alt = 'Photo by '+theKittens.kitten[randk].Credit+' source '+theKittens.kitten[randk].URL+'';
 				}
 				else {
 					img.alt = 'Photo by '+theKittens.kitten[randk].Credit+'';
 				};
-				console.log('UKIP cleansed by kittens - '+imgsrc+'');
 			};
 		});		
-	}	    
-	console.log('.. de-Faraging done.');
+	}
+    
 };
 
 // add listener

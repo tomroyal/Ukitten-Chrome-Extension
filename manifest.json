@@ -3,7 +3,7 @@
 
   "name": "UKItten",
   "description": "Replaces images of Nigel Farage or UKIP with kittens. Because kittens > UKIP.",
-  "version": "1.0.1",
+  "version": "1.0.2",
 
   "permissions": [
     "http://www.teaandkittens.co.uk/"
